@@ -2,11 +2,11 @@
 
 ## Local Development Setup 
 
-    git clone https://github.com/mattma/ember-rocks.git
-    cd ember-rocks
+    git clone https://github.com/mattma/ng-addon.git
+    cd ng-addon
     npm link
 
-`npm link` is very similar to `npm install -g`, except that instead of downloading the package from the repo the just cloned **ember-rock/** folder becomes the global package. Any changes to the files in the **ember-rock/** folder will immediately affect the global **ember-rock/** package.
+`npm link` is very similar to `npm install -g`, except that instead of downloading the package from the repo the just cloned **ng-addon/** folder becomes the global package. Any changes to the files in the **ember-rock/** folder will immediately affect the global **ng-addon/** package.
 
 
 ## Submit Issues or Features
@@ -31,6 +31,3 @@ Push to your fork and submit a pull request. Please provide us with some explana
 
 
 **Note**: Update to the most recent master release if possible. Search for similar issues. It's possible somebody has encountered this bug already. The more information you provide, the easier it is for us to validate that there is a bug and the faster we'll be able to take action.
-
-
-NOTE: Partially copied from [ember-cli](https://github.com/stefanpenner/ember-cli/blob/master/CONTRIBUTING.md)
