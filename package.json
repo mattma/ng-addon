@@ -1,6 +1,6 @@
 {
-  "name": "ember-rocks",
-  "description": "An Em(ber) command line utility to help you build an ambitious web application",
+  "name": "ng-addon",
+  "description": "An Angular command line utility (ngg) to generate addon packages",
   "version": "0.1.0",
   "homepage": "https://github.com/mattma/ng-addon",
   "author": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mattma/ember-rocks.git"
+    "url": "git://github.com/mattma/ng-addon.git"
   },
   "bugs": {
     "url": "https://github.com/mattma/ng-addon/issues"
@@ -32,15 +32,15 @@
   },
   "engineStrict": true,
   "keywords": [
-    "ember.js",
-    "ember",
+    "angular2",
+    "angularjs",
+    "ng",
+    "ng2",
+    "angular-cli",
     "cli",
-    "app",
-    "kit",
-    "app-kit",
-    "ember-app-kit",
-    "rocks",
-    "gulp"
+    "component",
+    "directive",
+    "addon"
   ],
   "scripts": {
     "clean": "rimraf node_modules npm-debug.log && npm cache clean",
