@@ -177,11 +177,11 @@ function runTasks (addonName, options) {
       process.chdir(dest);
     })
     // Running initialization tasks: npm install,
-    // .then(function () {
-    //   if (!isRunningTest) {
-    //     installerTasks(addonName, dest);
-    //   }
-    // })
+    .then(function () {
+      if (!isRunningTest) {
+        installerTasks(addonName, dest);
+      }
+    })
     .catch(function () {
       gutil.log(
         gutil.colors.red('[-Error:]'),
