@@ -19,7 +19,7 @@ var assertPathsExist = exports.assertPathsExist = function (paths, done) {
 
   paths.forEach(function (path) {
     fs.exists(path, function (exists) {
-      expect('' + path + ':' + exists).to.deep.equal('' + path + ':true');
+      expect('' + path + ':' + exists).to.be.equal('' + path + ':true');
       expect(exists).to.be.true();
       isFinished();
     });

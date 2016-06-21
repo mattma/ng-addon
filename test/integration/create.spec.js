@@ -33,7 +33,8 @@ describe('Created directory', function () {
     exec('./bin/ngg new ng-markdown', function (error, stdout, stderr) {
       // need to test the program should successfully shut down
       expect(stdout).to.include('[-Error:]');
-      expect(stdout).to.include('The folder name ng-markdown has existed in this directory tree!');
+      expect(stdout).to
+        .include('The addon package name ng-markdown has existed in this directory tree!');
       done();
     });
   });
@@ -41,7 +42,6 @@ describe('Created directory', function () {
   it('should scaffold a bunch of directories', function (done) {
     exec('./bin/ngg new ng-markdown --test', function () {
       helpers.assertFoldersExist([
-        // server folder
         'ng-markdown/src',
         'ng-markdown/tests'
       ], done);
@@ -54,9 +54,9 @@ describe('Created directory', function () {
         'ng-markdown/.gitignore',
         'ng-markdown/.npmignore',
         'ng-markdown/.travis.yml',
-        'ng-markdown/.karma.conf.js',
-        'ng-markdown/.karma-test-shim.js',
-        'ng-markdown/.LICENSE.md',
+        'ng-markdown/karma.conf.js',
+        'ng-markdown/karma-test-shim.js',
+        'ng-markdown/LICENSE.md',
         'ng-markdown/make.js',
         'ng-markdown/package.json',
         'ng-markdown/README.md',
