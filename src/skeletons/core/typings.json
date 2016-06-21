@@ -1,0 +1,12 @@
+{
+  "name": "__PROJECT_NAME__",
+  "dependencies": {},
+  "devDependencies": {},
+  "globalDevDependencies": {
+    "jasmine": "registry:dt/jasmine#2.2.0+20160412134438"
+  },
+  "globalDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#6abf99dda133ff859e16e3520b0b00b6b1239341"
+  }
+}

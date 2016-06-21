@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+/*
+ * https://github.com/mattma/ng-addon
+ *
+ * Copyright (c) 2016 Matt Ma
+ * Licensed under the MIT license.
+ */
+
+'use strict';
+
+// Provide a title to the process in `ps`
+process.title = 'ng-addon';
+
+var resolve = require('resolve');
+
+resolve('ng-addon', {
+  basedir: process.cwd()
+}, function (err, localCli) {
+  if (err) {
+    // using a global installed ng-addon package
+    require('../src/commands/cli');
+  } else {
+    // using a local installed ng-addon package
+    require(localCli);
+  }
+});

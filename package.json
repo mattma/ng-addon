@@ -1,0 +1,71 @@
+{
+  "name": "ember-rocks",
+  "description": "An Em(ber) command line utility to help you build an ambitious web application",
+  "version": "0.1.0",
+  "homepage": "https://github.com/mattma/ng-addon",
+  "author": {
+    "name": "Matt Ma",
+    "email": "matt@mattmadesign.com",
+    "url": "http://mattmadesign.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattma/ember-rocks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mattma/ng-addon/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/mattma/ng-addon/blob/master/LICENSE.md"
+    }
+  ],
+  "main": "src/commands/cli",
+  "preferGlobal": "true",
+  "bin": {
+    "ngg": "./bin/ngg"
+  },
+  "engines": {
+    "node": ">= 0.10.0",
+    "iojs": ">= 1.2.0"
+  },
+  "engineStrict": true,
+  "keywords": [
+    "ember.js",
+    "ember",
+    "cli",
+    "app",
+    "kit",
+    "app-kit",
+    "ember-app-kit",
+    "rocks",
+    "gulp"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules npm-debug.log && npm cache clean",
+    "test": "./node_modules/lab/bin/lab -cv -m 5000 ./test/**/*.spec.js",
+    "test-all": "./node_modules/lab/bin/lab -cv -m 5000 ./test/**/*.spec.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "commander": "^2.9.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-util": "^3.0.7",
+    "liftoff": "^2.2.1",
+    "pretty-hrtime": "^1.0.2",
+    "resolve": "^1.1.7",
+    "rimraf": "^2.5.2",
+    "semver": "^5.1.0",
+    "tildify": "^1.2.0"
+  },
+  "devDependencies": {
+    "gulp-jshint": "^2.0.1",
+    "gulp-jscs": "^3.0.2",
+    "code": "^3.0.1",
+    "lab": "^10.8.2",
+    "mkdirp": "*"
+  }
+}
