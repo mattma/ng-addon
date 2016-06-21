@@ -1,29 +1,23 @@
 #################
 ## Misc
 #################
-**/.DS_Store
-nbproject
-manifest.mf
-build.xml
-node_modules/*
+
+/node_modules
+/typings
+/dist
+/tmp
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
 npm-debug.log
-coverage
-*.js
-!karma.conf.js
-!karma-test-shim.js
-*.map
-*.d.ts
-!make.js
-!bundles/*.js
-typings
 
 #################
 ## JetBrains
 #################
-.idea
+/.idea
 .project
 .settings
-.idea/*
 *.iml
 
 ############
@@ -40,6 +34,4 @@ Desktop.ini
 ## Mac
 ############
 
-# Mac crap
 .DS_Store
-

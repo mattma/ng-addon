@@ -54,6 +54,12 @@ function createCoreFiles (addonName, dest) {
     dest:     dest + '/tests',
     filename: dasherizeAddonName + '.component.spec',
     ext:      '.ts'
+  }, {
+    // create a gitignore file
+    src:      skeletonTemplatePath + '/gitignore',
+    dest:     dest,
+    filename: '.gitignore',
+    ext:      ''
   }];
 
   return new Promise(function (resolve, reject) {
