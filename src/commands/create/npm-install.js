@@ -30,3 +30,5 @@ function npmInstallationFailLogger () {
   log(red('[-Error:] Need to manually fix the ERRORS, then do "npm install"'));
   log(red('[-Error:] Before the project is fully ready for development'));
 }
+
+// log(gray('[-log:]'), magenta('installing'), cyan(addonName));

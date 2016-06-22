@@ -44,7 +44,7 @@ module.exports = function runTasks (addonName, options) {
   // check for the mode, is running test or not
   var isRunningTest = options.test || false;
 
-  log(gray('[-log:]'), 'generating an addon', cyan(addonName), 'at', magenta(tildify(dest)));
+  log(gray('[-log:]'), 'installing an addon', cyan(addonName), 'at', magenta(tildify(dest)));
 
   var tasks = [
     createRootContent(addonName, dest),

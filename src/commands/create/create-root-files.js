@@ -1,10 +1,16 @@
-var Promise     = require('bluebird');
-var gulp        = require('gulp');
-var rename      = require('gulp-rename');
-var replace     = require('gulp-replace');
+var Promise = require('bluebird');
+var path    = require('path');
+var gulp    = require('gulp');
+var gutil   = require('gulp-util');
+var rename  = require('gulp-rename');
+var replace = require('gulp-replace');
+var tap     = require('gulp-tap');
 
-var stringUtils    = require('../../utils/string');
+var stringUtils  = require('../../utils/string');
 var pathResolver = require('../../utils/path-resolver');
+
+var log   = gutil.log;
+var green = gutil.colors.green;
 
 module.exports = function createCoreFiles (addonName, dest) {
   // get the full path to the core of application. ( Server && Client )
@@ -47,9 +53,23 @@ module.exports = function createCoreFiles (addonName, dest) {
           basename: file.filename,
           extname:  file.ext
         }))
+        .pipe(tap(logFilename))
         .on('error', reject)
         .on('end', resolve)
         .pipe(gulp.dest(file.dest));
     });
   });
+}
+
+function logFilename (file, t) {
+  var filename = path.basename(file.path);
+  if (filename.indexOf('component.ts') > -1) {
+    log(green('create'), 'src/' + filename);
+  } else if (filename.indexOf('component.spec.ts') > -1) {
+    log(green('create'), 'tests/' + filename);
+  } else {
+    log(green('create'), filename);
+  }
+
+  return t;
 }
