@@ -21,7 +21,7 @@ var bold    = gutil.colors.bold;
 
 // Step 2: installation step: internet access is required
 // Flow Control: execute serial tasks: npm install, git init
-function installerTasks (dest) {
+function installerTasks (addonName, dest) {
   var gitTasks = [
     isBinaryExist('git'),
     gitInitialization(dest),
@@ -33,19 +33,15 @@ function installerTasks (dest) {
 
   // git initialization task
   Promise.all(gitTasks)
-    .then(function () {
-      successLogger('Successfully initialized git.');
-    })
+    .then(() => successLogger('Successfully initialized git.'))
     .catch(errorLogger);
 
   // npm installation task
-  log(gray('[-log:]'), 'Installing packages for tooling via npm...');
-
   Promise.all(npmTasks)
     .then(function () {
       successLogger('Installed packages for tooling via npm.');
       log(bold('[-copy:] =>'),
-        cyan('cd ' + addonName), gray('# navigate to the newly created addon package'));
+        cyan('cd ' + addonName), gray('# navigate to the new addon package'));
       log(bold('[-copy:] =>'), cyan('ngg serve'), gray('watch file changes and rebuild the addon'));
     })
     .catch(errorLogger);
@@ -53,11 +49,11 @@ function installerTasks (dest) {
 
 // Step 1: run sequentially tasks to scaffold addon packages: copy addon core skeleton
 module.exports = function runTasks (addonName, options) {
-  var dest          = resolvePath(addonName);
+  const dest          = resolvePath(addonName);
   // check for the mode, is running test or not
-  var isRunningTest = options.test || false;
+  const isRunningTest = options.test || false;
 
-  log(gray('[-log:]'), 'installing an addon', cyan(addonName), 'at', magenta(tildify(dest)));
+  log(`${gray('[-log:]')} installing an addon ${cyan(addonName)} at ${magenta(tildify(dest))}`);
 
   var tasks = [
     createRootContent(addonName, dest),
@@ -65,14 +61,14 @@ module.exports = function runTasks (addonName, options) {
   ];
 
   Promise.all(tasks)
-  // switch to the newly generated folder
+    // switch to the newly generated folder
     .then(function () {
       process.chdir(dest);
     })
     // Running initialization tasks: npm install,
     .then(function () {
       if (!isRunningTest) {
-        installerTasks(dest);
+        installerTasks(addonName, dest);
       }
     })
     .catch(function () {

@@ -9,8 +9,6 @@ var red  = gutil.colors.red;
 
 // "git init" task to kick start a git project
 module.exports = function gitInitializer (dest) {
-  log(gray('[-log:]'), cyan('ngg'), 'is doing REALLY hard to initialize your repo ...');
-
   var command = 'git init && git add . && git commit -m \'Initial Commit @ ' + getToday() + '\'';
 
   return new Promise(function (resolve, reject) {

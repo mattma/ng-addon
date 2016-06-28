@@ -10,7 +10,8 @@ var red  = gutil.colors.red;
 module.exports = function npmInstaller (dest) {
   return new Promise(function (resolve, reject) {
     dest = dest || process.cwd();
-    log(gray('[-log:]'), 'NPM is installing node packages...')
+    log(gray('[-log:]'), 'Installing packages for tooling via npm...');
+
     process.chdir(dest);
 
     return exec('npm install', function (error, stdout, stderr) {

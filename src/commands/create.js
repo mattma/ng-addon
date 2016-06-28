@@ -1,27 +1,22 @@
-'use strict';
+const fs = require('fs');
 
-var fs    = require('fs');
-var gutil = require('gulp-util');
+const runTasks = require('./create/index');
+const l        = require('../utils/logger');
 
-var runTasks = require('./create/index');
-
-var mkdir  = fs.mkdirSync;
-var exists = fs.existsSync;
-var log    = gutil.log;
-var red    = gutil.colors.red
+const mkdir  = fs.mkdirSync;
+const exists = fs.existsSync;
 
 // Create command entry point function
-module.exports = function create (addonName, options) {
+module.exports = (addonName, options) => {
   if (!addonName || typeof addonName !== 'string') {
-    log(red('[-Error:] Missing addon package name.'), 'ex: ngg new ng-markdown');
-    log(red('[-Error:]'), 'See \'ngg new --help\'');
+    l.log(`${l.red('[-Error:] Missing addon package name.')} ex: ngg new ng-markdown`);
+    l.log(`${l.red('[-Error:]')} See 'ngg new --help'`);
     process.exit(0);
   }
 
   // Create the folder if it is not existed
   if (exists(addonName)) {
-    log(red('[-Error:]'),
-      'The addon package name', red(addonName), 'has existed in this directory tree!');
+    l.log(`${l.red('[-Error:]')} ${l.cyan(addonName)} has existed in the directory!`);
     process.exit(0);
   } else {
     // Create a new directory name what user passed in
