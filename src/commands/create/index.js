@@ -7,8 +7,7 @@ const createRootFiles   = require('./create-root-files');
 const npmInstall        = require('./npm-install');
 const gitInitialization = require('./git-initialization');
 const isBinaryExist     = require('../../utils/is-binary-exist');
-
-const l = require('../../utils/logger');
+const l                 = require('../../utils/logger');
 
 // Step 2: installation step: internet access is required
 // Flow Control: execute serial tasks: npm install, git init
@@ -51,7 +50,7 @@ module.exports = (addonName, options) => {
   ];
 
   Promise.all(tasks)
-    // switch to the newly generated folder
+  // switch to the newly generated folder
     .then(() => process.chdir(dest))
     // Running initialization tasks: npm install,
     .then(() => {
