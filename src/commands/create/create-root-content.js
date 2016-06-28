@@ -1,25 +1,22 @@
-var Promise = require('bluebird');
-var path    = require('path');
-var gulp    = require('gulp');
-var gutil   = require('gulp-util');
-var replace = require('gulp-replace');
-var tap     = require('gulp-tap');
+const Promise = require('bluebird');
+const path    = require('path');
+const gulp    = require('gulp');
+const replace = require('gulp-replace');
+const tap     = require('gulp-tap');
 
-var stringUtils  = require('../../utils/string');
-var pathResolver = require('../../utils/path-resolver');
-
-var log         = gutil.log;
-var green       = gutil.colors.green;
-var ignoreFiles = ['.DS_Store', 'src', 'tests', '.gitkeep'];
+const stringUtils  = require('../../utils/string');
+const pathResolver = require('../../utils/path-resolver');
+const l            = require('../../utils/logger');
+const ignoreFiles  = ['.DS_Store', 'src', 'tests', '.gitkeep'];
 
 // Copy "skeletons/core" files to the destination
-module.exports = function copyCoreContent (addonName, dest) {
+module.exports = (addonName, dest) => {
   // get the full path to the core of application. ( Server && Client )
-  var skeletonsCorePath  = pathResolver('skeletons/core');
-  var coreSrc            = [skeletonsCorePath + '/**/*'];
-  var dasherizeAddonName = stringUtils.dasherize(addonName);
+  const skeletonsCorePath  = pathResolver('skeletons/core');
+  const coreSrc            = [`${skeletonsCorePath}/**/*`];
+  const dasherizeAddonName = stringUtils.dasherize(addonName);
 
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     // Scaffold the "core/" of the application.
     gulp.src(coreSrc, {dot: true})
       .pipe(replace(/__PROJECT_NAME__/g, dasherizeAddonName))
@@ -31,9 +28,9 @@ module.exports = function copyCoreContent (addonName, dest) {
 }
 
 function logFilename (file, t) {
-  var filename = path.basename(file.path);
+  const filename = path.basename(file.path);
   if (ignoreFiles.indexOf(filename) === -1) {
-    log(green('create'), filename);
+    l.log(`${l.green('create')} ${filename}`);
   }
   return t;
 }

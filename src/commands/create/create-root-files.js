@@ -1,51 +1,48 @@
-var Promise = require('bluebird');
-var path    = require('path');
-var gulp    = require('gulp');
-var gutil   = require('gulp-util');
-var rename  = require('gulp-rename');
-var replace = require('gulp-replace');
-var tap     = require('gulp-tap');
+const Promise = require('bluebird');
+const path    = require('path');
+const gulp    = require('gulp');
+const rename  = require('gulp-rename');
+const replace = require('gulp-replace');
+const tap     = require('gulp-tap');
 
-var stringUtils  = require('../../utils/string');
-var pathResolver = require('../../utils/path-resolver');
+const stringUtils  = require('../../utils/string');
+const pathResolver = require('../../utils/path-resolver');
+const l            = require('../../utils/logger');
 
-var log   = gutil.log;
-var green = gutil.colors.green;
-
-module.exports = function createCoreFiles (addonName, dest) {
+module.exports = (addonName, dest) => {
   // get the full path to the core of application. ( Server && Client )
-  var skeletonTemplatePath = pathResolver('skeletons/templates/core');
-  var dasherizeAddonName   = stringUtils.dasherize(addonName);
-  var classifyAddonName    = stringUtils.classify(addonName);
+  const skeletonTemplatePath = pathResolver('skeletons/templates/core');
+  const dasherizeAddonName   = stringUtils.dasherize(addonName);
+  const classifyAddonName    = stringUtils.classify(addonName);
 
-  var fileList = [{
+  const fileList = [{
     // create root project entrypoint typescript file
-    src:      skeletonTemplatePath + '/root.ts',
+    src:      `${skeletonTemplatePath}/root.ts`,
     dest:     dest,
     filename: dasherizeAddonName,
     ext:      '.ts'
   }, {
     // create a typescript file in src folder
-    src:      skeletonTemplatePath + '/src-index.ts',
-    dest:     dest + '/src',
-    filename: dasherizeAddonName + '.component',
+    src:      `${skeletonTemplatePath}/src-index.ts`,
+    dest:     `${dest}/src`,
+    filename: `${dasherizeAddonName}.component`,
     ext:      '.ts'
   }, {
     // create a typescript file in tests folder
-    src:      skeletonTemplatePath + '/test-index.ts',
-    dest:     dest + '/tests',
-    filename: dasherizeAddonName + '.component.spec',
+    src:      `${skeletonTemplatePath}/test-index.ts`,
+    dest:     `${dest}/tests`,
+    filename: `${dasherizeAddonName}.component.spec`,
     ext:      '.ts'
   }, {
     // create a gitignore file
-    src:      skeletonTemplatePath + '/gitignore',
+    src:      `${skeletonTemplatePath}/gitignore`,
     dest:     dest,
     filename: '.gitignore',
     ext:      ''
   }];
 
-  return new Promise(function (resolve, reject) {
-    fileList.forEach(function (file) {
+  return new Promise((resolve, reject) => {
+    fileList.forEach((file) => {
       gulp.src(file.src)
         .pipe(replace(/__PROJECT_NAME__/g, dasherizeAddonName))
         .pipe(replace(/__PROJECT_NAME_CLASSIFY__/g, classifyAddonName))
@@ -62,13 +59,14 @@ module.exports = function createCoreFiles (addonName, dest) {
 }
 
 function logFilename (file, t) {
-  var filename = path.basename(file.path);
+  const filename = path.basename(file.path);
+
   if (filename.indexOf('component.ts') > -1) {
-    log(green('create'), 'src/' + filename);
+    l.log(`${l.green('create')} src/${filename}`);
   } else if (filename.indexOf('component.spec.ts') > -1) {
-    log(green('create'), 'tests/' + filename);
+    l.log(`${l.green('create')} tests/${filename}`);
   } else {
-    log(green('create'), filename);
+    l.log(`${green('create')} ${filename}`);
   }
 
   return t;
