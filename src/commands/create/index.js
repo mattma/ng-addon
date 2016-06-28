@@ -1,86 +1,66 @@
-'use strict';
+const Promise     = require('bluebird');
+const resolvePath = require('path').resolve;
+const tildify     = require('tildify');
 
-var Promise     = require('bluebird');
-var resolvePath = require('path').resolve;
-var tildify     = require('tildify');
-var gutil       = require('gulp-util');
+const createRootContent = require('./create-root-content');
+const createRootFiles   = require('./create-root-files');
+const npmInstall        = require('./npm-install');
+const gitInitialization = require('./git-initialization');
+const isBinaryExist     = require('../../utils/is-binary-exist');
 
-var createRootContent = require('./create-root-content');
-var createRootFiles   = require('./create-root-files');
-var npmInstall        = require('./npm-install');
-var gitInitialization = require('./git-initialization');
-var isBinaryExist     = require('../../utils/is-binary-exist');
-
-var log     = gutil.log;
-var green   = gutil.colors.green;
-var red     = gutil.colors.red;
-var cyan    = gutil.colors.cyan;
-var gray    = gutil.colors.gray;
-var magenta = gutil.colors.magenta;
-var bold    = gutil.colors.bold;
+const l = require('../../utils/logger');
 
 // Step 2: installation step: internet access is required
 // Flow Control: execute serial tasks: npm install, git init
 function installerTasks (addonName, dest) {
-  var gitTasks = [
+  const gitTasks = [
     isBinaryExist('git'),
-    gitInitialization(dest),
+    gitInitialization(dest)
   ];
 
-  var npmTasks = [
+  const npmTasks = [
     npmInstall(dest)
   ];
 
   // git initialization task
   Promise.all(gitTasks)
-    .then(() => successLogger('Successfully initialized git.'))
-    .catch(errorLogger);
+    .then(() => l.successLog('Successfully initialized git.'))
+    .catch(l.errorLog);
 
   // npm installation task
   Promise.all(npmTasks)
-    .then(function () {
-      successLogger('Installed packages for tooling via npm.');
-      log(bold('[-copy:] =>'),
-        cyan('cd ' + addonName), gray('# navigate to the new addon package'));
-      log(bold('[-copy:] =>'), cyan('ngg serve'), gray('watch file changes and rebuild the addon'));
+    .then(() => {
+      l.successLog('Installed packages for tooling via npm.');
+      l.log(`${l.bold('[-copy:] =>')} ${l.cyan('cd')} ${l.cyan(addonName)} ${l.gray('# navigate to the new addon package')}`);
+      l.log(`${l.bold('[-copy:] =>')} ${l.cyan('ngg serve')} ${l.gray('watch file changes and rebuild the addon')}`);
     })
-    .catch(errorLogger);
+    .catch(l.errorLog);
 }
 
 // Step 1: run sequentially tasks to scaffold addon packages: copy addon core skeleton
-module.exports = function runTasks (addonName, options) {
+module.exports = (addonName, options) => {
   const dest          = resolvePath(addonName);
   // check for the mode, is running test or not
   const isRunningTest = options.test || false;
 
-  log(`${gray('[-log:]')} installing an addon ${cyan(addonName)} at ${magenta(tildify(dest))}`);
+  l.log(`${l.gray('[-log:]')} installing an addon ${l.cyan(addonName)} at ${l.magenta(tildify(dest))}`);
 
-  var tasks = [
+  const tasks = [
     createRootContent(addonName, dest),
     createRootFiles(addonName, dest) // generate required root typescript files
   ];
 
   Promise.all(tasks)
     // switch to the newly generated folder
-    .then(function () {
-      process.chdir(dest);
-    })
+    .then(() => process.chdir(dest))
     // Running initialization tasks: npm install,
-    .then(function () {
+    .then(() => {
       if (!isRunningTest) {
         installerTasks(addonName, dest);
       }
     })
-    .catch(function () {
-      errorLogger('ng-addon could not generate an addon package due to the error above!');
+    .catch(() => {
+      l.errorLog('ng-addon could not generate an addon package due to the error above!');
       process.exit(0);
     });
-}
-
-function successLogger (msg) {
-  log(green('[-done:] ' + msg));
-}
-
-function errorLogger (msg) {
-  log(red('[-Error:] ' + msg));
 }
